@@ -7,7 +7,7 @@ const Jumbotron = () => {
   const handleLearnMore = () => {
     const element = document.querySelector(".sound-section")
     window.scrollTo({
-      top: element?.getBoundingClientRect().top,
+      top: element?.getBoundingClientRect().top, //elementin top mesafesi hesaplama
       left: 0,
       behavior: "smooth"
     })
@@ -19,8 +19,7 @@ const Jumbotron = () => {
       <h2 className='title'>New</h2>
       <img className='logo' src={Iphone} alt='iPhone 14 Pro' />
       <p className='text'>Big ang bigger.</p>
-      <span className='description'>
-       </span>
+      <span className='description'>From $41.62/mo. for 24mo. or $999 before trade-in</span>
       <ul className='links'>
         <li>
           <button className='button'>Buy</button>

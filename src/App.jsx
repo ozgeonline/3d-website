@@ -18,7 +18,7 @@ function App() {
   return (
     <div className="App">
       <Loader />
-      <div ref={contentRef} id="content"> {/*önizleme modunda bölümleri gizleme amacı*/}
+      <div ref={contentRef} id="content"> {/*önizleme modunda bölümleri gizleme*/}
         <Nav />
         <Jumbotron />
         <SoundSection />

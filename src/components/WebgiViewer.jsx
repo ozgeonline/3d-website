@@ -1,31 +1,31 @@
 import React, { 
-  forwardRef, 
-  useCallback, 
+  forwardRef, //ana bileşenden bir alt bileşene bir başvuruyu iletir
+  useCallback, //bağımlılıkları değiştiğinde yeniden oluşturulur
   useEffect, 
-  useImperativeHandle, 
+  useImperativeHandle, //ana bileşenin alt bileşenin örneğine zorunlu olarak erişmesinin ve onu kontrol etmesinin bir yolu
   useRef, 
   useState 
 } from 'react'
 //useRef html öğesine referans alır. dom manipulasyonu
 import {
-  ViewerApp,
-  AssetManagerPlugin,
-  GBufferPlugin,
-  ProgressivePlugin,
-  TonemapPlugin,
-  SSRPlugin,
-  SSAOPlugin,
-  BloomPlugin,
-  GammaCorrectionPlugin,
+  ViewerApp, //eklentilerin entegre olduğu ana uygulama
+  AssetManagerPlugin, //yönetim ve yüklenmeden sorumlu bir eklenti
+  GBufferPlugin, //derinlik, normaller ve malzeme özellikleri gibi çeşitli bilgileri saklar
+  ProgressivePlugin, //büyük modellerin görüntülenmesi performansını artıran aşamalı görüntü oluşturmayı etkinleştirir.
+  TonemapPlugin,//parlaklığı ve kontrastı ayarlayan ton eşlemeyi uygular
+  SSRPlugin,// görüntüdeki yüzeylere gerçekçi yansımalar ekleyen ekran alanı yansımalarını etkinleştirir.
+  SSAOPlugin, //görüntüdeki nesnelerin köşelerine ve kenarlarına gölgeler ekler
+  BloomPlugin,//parlak nesnelerin etrafında parlak bir etki yaratan çiçeklenme ekler.
+  GammaCorrectionPlugin,//farklı ekranlarda daha gerçekçi görünmesi için görüntünün parlaklığını ayarlayan, oluşturulan görüntüye gama düzeltmesi uygular.
   mobileAndTabletCheck
 } from "webgi";
 
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { scrollAnimation } from '../lib/scroll-animation';
+import { ScrollTrigger } from 'gsap/ScrollTrigger'; //sayfanın kaydırılmasıyla tetiklenen animasyonlarda kullanılır.
+import { scrollAnimation } from '../lib/scroll-animation'; 
 
 
-gsap.registerPlugin(ScrollTrigger); //animasyon tetiklenir
+gsap.registerPlugin(ScrollTrigger); //ScrollTrigger eklentisini GSAP'ye kaydeder. Eklentiyi GSAP ile kullanmak için bu gereklidir.
 
 const WebgiViewer = forwardRef((props, ref) => {
 
@@ -39,9 +39,9 @@ const WebgiViewer = forwardRef((props, ref) => {
   const [isMobile, setIsMobile] = useState(null)
 
   useImperativeHandle(ref, () => ({
-    triggerPreview() {
+    triggerPreview() { //önizleme animasyonunun tetiklenmesinden sorumludur.
       setPreviewMode(true)
-      canvasContainerRef.current.style.pointerEvents = "all"
+      canvasContainerRef.current.style.pointerEvents = "all" //Canvas da points olaylarını etkinleştirir.
       props.contentRef.current.style.opacity = "0"
 
       gsap.to(positionRef, {
@@ -51,7 +51,9 @@ const WebgiViewer = forwardRef((props, ref) => {
         duration: 2,
         onUpdate: () => {
           viewerRef.setDirty()
-          cameraRef.positionTargetUpdated(true)
+          //yeniden oluşturulması gerektiği anlamına geliyor. Bu, sahne veya kamera değiştiğinde gereklidir; 
+          //böylece izleyici, sahnenin ve kameranın yeni durumunu yansıtacak şekilde ekranı güncelleyebilir.
+          cameraRef.positionTargetUpdated(true) //ScrollTrigger tarafından çağırılır.Animasyon öğesinin konumunun güncellenmesinden sorumludur.
         }
       })
 
@@ -71,63 +73,63 @@ const WebgiViewer = forwardRef((props, ref) => {
   const setupViewer = useCallback(async () => {
     try {
         // Initialize the viewer
-    const viewer = new ViewerApp({
-      canvas: canvasRef.current,
-    })
+      const viewer = new ViewerApp({
+        canvas: canvasRef.current,
+      })
 
-    setViewerRef(viewer)
-    const isMobileOrTablet = mobileAndTabletCheck()
-    setIsMobile(isMobileOrTablet)
+      setViewerRef(viewer)
+      const isMobileOrTablet = mobileAndTabletCheck()
+      setIsMobile(isMobileOrTablet)
 
-    const manager = await viewer.addPlugin(AssetManagerPlugin)
-    const camera = viewer.scene.activeCamera;
-    const position = camera.position;
-    const target = camera.target;
+      const manager = await viewer.addPlugin(AssetManagerPlugin)
+      const camera = viewer.scene.activeCamera;
+      const position = camera.position;
+      const target = camera.target;
 
-    setCameraRef(camera)
-    setPositionRef(position)
-    setTargetRef(target)
+      setCameraRef(camera)
+      setPositionRef(position)
+      setTargetRef(target)
 
-    await viewer.addPlugin(GBufferPlugin)
-    await viewer.addPlugin(new ProgressivePlugin(32))
-    await viewer.addPlugin(new TonemapPlugin(true))
-    await viewer.addPlugin(GammaCorrectionPlugin)
-    await viewer.addPlugin(SSRPlugin)
-    await viewer.addPlugin(SSAOPlugin)
-    await viewer.addPlugin(BloomPlugin)
+      await viewer.addPlugin(GBufferPlugin)
+      await viewer.addPlugin(new ProgressivePlugin(32))
+      await viewer.addPlugin(new TonemapPlugin(true))
+      await viewer.addPlugin(GammaCorrectionPlugin)
+      await viewer.addPlugin(SSRPlugin)
+      await viewer.addPlugin(SSAOPlugin)
+      await viewer.addPlugin(BloomPlugin)
 
-    viewer.renderer.refreshPipeline()
+      viewer.renderer.refreshPipeline()
 
-    await manager.addFromPath("scene-black.glb")
+      await manager.addFromPath("scene-black.glb")
 
-    //BG black. nav geri geldi
-    viewer.getPlugin(TonemapPlugin).config.clipBackground = true
+      //BG black. nav geri geldi
+      viewer.getPlugin(TonemapPlugin).config.clipBackground = true
 
-    //yüklendikten sonra kullanıcı 3d modeli döndürmemesi için
-    viewer.scene.activeCamera.setCameraOptions({ controlsEnabled: false})
+      //yüklendikten sonra kullanıcı 3d modeli döndürmemesi için
+      viewer.scene.activeCamera.setCameraOptions({ controlsEnabled: false})
 
-    if (isMobileOrTablet) {
-      position.set(16.7, 1.17, 11.7) //-16***********
-      target.set(0, 1.37, 0)
-      props.contentRef.current.className = "mobile-or-tablet"
-    }
-
-    window.scrollTo(0,0) //yeniden yüklemede ekran toptan başlayacak
-    let needsUpdate = true;
-
-    const onUpdate = () => {
-      needsUpdate = true
-      viewer.setDirty() //kamera ve kullanıcının güncellenmesi gerektiğini belirtir.
-    }
-    //kamera güncellemesi
-    viewer.addEventListener("preFrame", () => {
-      if(needsUpdate) {
-        camera.positionTargetUpdated(true)
-        needsUpdate = false
+      if (isMobileOrTablet) {
+        position.set(-16.7, 1.17, 11.7)
+        target.set(0, 1.37, 0)
+        props.contentRef.current.className = "mobile-or-tablet"
       }
-    })
 
-    memoziedScrollAnimation(position, target, isMobileOrTablet, onUpdate)
+      window.scrollTo(0,0) //yeniden yüklemede ekran top tan başlayacak
+      let needsUpdate = true;
+
+      const onUpdate = () => {
+        needsUpdate = true
+        viewer.setDirty() //kamera ve kullanıcının güncellenmesi gerektiğini belirtir.
+      }
+      //kamera güncellemesi
+      viewer.addEventListener("preFrame", () => {
+        if(needsUpdate) {
+          camera.positionTargetUpdated(true)
+          needsUpdate = false
+        }
+      })
+
+      memoziedScrollAnimation(position, target, isMobileOrTablet, onUpdate)
 
     } catch (error) {
       console.log(error);

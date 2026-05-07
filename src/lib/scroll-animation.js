@@ -4,7 +4,7 @@ export const scrollAnimation = (position, target, isMobile, onUpdate) => {
   const tl = gsap.timeline()
 
   tl.to(position, {
-    x: !isMobile ? -3.38 : -7.0, //?3.38
+    x: !isMobile ? -3.38 : -7.0,
     y: !isMobile ? -10.74 : -12.2,
     z: !isMobile ? -5.93 : -6.0,
     //değiştirmek istediğimiz özellikler tetiklenecek.
@@ -35,8 +35,7 @@ export const scrollAnimation = (position, target, isMobile, onUpdate) => {
       end: 'top top',
       scrub: 2, 
       immediateRender: false
-    },
-    
+    }
   }).to('.sound-section-content', {
     opacity: 1,
     scrollTrigger: {
@@ -45,9 +44,9 @@ export const scrollAnimation = (position, target, isMobile, onUpdate) => {
       end: 'top top',
       scrub: 2, 
       immediateRender: false
-    },
-    
-  }).to(position, {
+    }
+  })
+  .to(position, {
     x: !isMobile ? 1.56 : 9.36,
     y: !isMobile ? 5.0 : 10.95, 
     z: !isMobile ? 0.01 : 0.09,
@@ -70,7 +69,8 @@ export const scrollAnimation = (position, target, isMobile, onUpdate) => {
       scrub: 2, 
       immediateRender: false
     }
-  }).to('.display-section', {
+  })
+  .to('.display-section', {
     opacity: 1,
     scrollTrigger: {
       trigger: '.display-section',
