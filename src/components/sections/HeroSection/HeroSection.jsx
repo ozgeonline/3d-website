@@ -1,8 +1,8 @@
 import React from 'react'
-import Iphone from '../assets/images/iphone-14.jpg'
-import HoldingIphone from '../assets/images/iphone-hand.png'
+import Iphone from '@/assets/images/iphone-14.jpg'
+import HoldingIphone from '@/assets/images/iphone-hand.png'
 
-const Jumbotron = () => {
+const HeroSection = () => {
 
   const handleLearnMore = () => {
     const element = document.querySelector(".sound-section")
@@ -33,4 +33,4 @@ const Jumbotron = () => {
   )
 }
 
-export default Jumbotron
+export default HeroSection
