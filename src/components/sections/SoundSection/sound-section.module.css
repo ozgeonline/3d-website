@@ -17,7 +17,6 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  opacity: 0;
 }
 
 .title {
@@ -49,40 +48,6 @@
 .description {
   font-size: 21px;
   font-weight: 400;
-}
-
-.actions {
-  display: flex;
-  justify-content: center;
-  margin-top: 24px;
-  align-items: center;
-  gap: 28px;
-}
-
-.button {
-  background: var(--color-blue-primary);
-  color: var(--color-white);
-  cursor: pointer;
-  display: inline-block;
-  text-align: center;
-  white-space: nowrap;
-  font-size: 17px;
-  font-weight: 400;
-  min-width: 28px;
-  padding: 8px 16px;
-  border-radius: 980px;
-  border: none;
-}
-
-.linkButton {
-  padding: 0;
-  border: none;
-  background: none;
-  color: var(--color-blue-link);
-  font: inherit;
-  font-size: 21px;
-  font-weight: 400;
-  cursor: pointer;
 }
 
 @media screen and (max-width: 990px) {

@@ -3,6 +3,9 @@ import gsap from "gsap";
 export const scrollAnimation = (position, target, isMobile, onUpdate) => {
   const tl = gsap.timeline()
 
+  gsap.set('.sound-section-content', { opacity: 0 })
+  gsap.set('.display-section', { opacity: 0 })
+
   tl.to(position, {
     x: !isMobile ? -3.38 : -7.0,
     y: !isMobile ? -10.74 : -12.2,
