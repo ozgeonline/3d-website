@@ -1,7 +1,6 @@
 import styles from './section-actions.module.css'
 
 const ACTION_CLASS_BY_VARIANT = {
-  fixed: styles.fixedButton,
   link: styles.linkButton,
   primary: styles.button,
 }
