@@ -1,6 +1,5 @@
-import React from 'react'
-import Iphone from '@/assets/images/iphone-14.jpg'
 import HoldingIphone from '@/assets/images/iphone-hand.png'
+import styles from './hero-section.module.css'
 
 const HeroSection = () => {
 
@@ -15,21 +14,26 @@ const HeroSection = () => {
   }
 
   return (
-    <div className='jumbotron-section wrapper'>
-      <h2 className='title'>New</h2>
-      <img className='logo' src={Iphone} alt='iPhone 14 Pro' />
-      <p className='text'>Big ang bigger.</p>
-      <span className='description'>From $41.62/mo. for 24mo. or $999 before trade-in</span>
-      <ul className='links'>
-        <li>
-          <button className='button'>Buy</button>
-        </li>
-        <li>
-          <a className='link' onClick={handleLearnMore}>Learn more</a>
-        </li>
-      </ul>
-      <img className='iphone-img' src={HoldingIphone} alt='iPhone'/>
-    </div>
+    <section className={styles.heroSection}>
+      <h2 className={styles.title}>New</h2>
+      <h1 className={styles.productName}>iPhone 17 Pro</h1>
+      <p className={styles.headline}>Big and bigger.</p>
+      <span className={styles.description}>
+        From $49.95/mo. for 24mo. or $1199 before trade-in
+      </span>
+      <div className={styles.actions}>
+        <button className={styles.button}>
+          Buy
+        </button>
+        <button
+          className={styles.linkButton}
+          onClick={handleLearnMore}
+          type='button'>
+          Learn more
+        </button>
+      </div>
+      <img className={styles.phoneImage} src={HoldingIphone} alt='iPhone' />
+    </section>
   )
 }
 

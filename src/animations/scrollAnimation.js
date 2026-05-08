@@ -27,7 +27,7 @@ export const scrollAnimation = (position, target, isMobile, onUpdate) => {
       scrub: 2, 
       immediateRender: false
     }
-  }).to('.jumbotron-section', {
+  }).to('.hero-section', {
     opacity: 0,
     scrollTrigger: {
       trigger: '.sound-section',

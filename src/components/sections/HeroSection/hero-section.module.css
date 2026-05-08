@@ -1,0 +1,112 @@
+.heroSection {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 980px;
+  width: 100%;
+  box-sizing: border-box;
+  height: calc(100vh - 40px);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 60px;
+  position: relative;
+  z-index: 1;
+  min-height: 831px;
+}
+
+.title {
+  color: var(--color-gray-600);
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: -0.022em;
+}
+
+.productName {
+  color: var(--color-white-soft);
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 1;
+  margin: 0;
+}
+
+.headline {
+  display: inline-block;
+  color: var(--color-transparent);
+  background-image: linear-gradient(180deg, var(--color-pink-gradient-start), var(--color-purple-gradient-end));
+  -webkit-background-clip: text;
+  background-clip: text;
+  padding-top: 0.5px;
+  margin-top: 16px;
+  font-size: 48px;
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+
+.description {
+  font-size: 21px;
+  font-weight: 400;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+  align-items: center;
+  gap: 28px;
+}
+
+.button {
+  background: var(--color-blue-primary);
+  color: var(--color-white);
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
+  font-size: 17px;
+  font-weight: 400;
+  min-width: 28px;
+  padding: 8px 16px;
+  border-radius: 980px;
+  border: none;
+}
+
+.linkButton {
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--color-blue-link);
+  font: inherit;
+  font-size: 21px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.phoneImage {
+  margin-right: -400px;
+  height: 516px;
+  position: absolute;
+  bottom: 0;
+}
+
+:global(.mobile-or-tablet) .phoneImage {
+  display: none;
+}
+
+@media screen and (max-width: 990px) {
+  .heroSection {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
+    box-sizing: border-box;
+    min-height: 746px;
+    height: 100vh;
+  }
+
+  .description {
+    font-size: 14px;
+  }
+
+  .phoneImage {
+    display: none;
+  }
+}
