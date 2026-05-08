@@ -188,108 +188,18 @@ body::-webkit-scrollbar-thumb {
 
 
 
-.sound-section.wrapper {
-  width: 100%;
-  color: var(--color-gray-900);
-  background-color: var(--color-white-warm);
-  height: 100vh;
-}
-
-.sound-section .body {
-  max-width: 980px;
-  margin: 0 auto;
-}
-
-.sound-section .content {
-  max-width: 490px;
-  width: 100%;
-  padding: 200px 0;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  opacity: 0;
-}
-
-.sound-section .title {
-  color: var(--color-gray-900);
-  font-size: 17px;
-  font-weight: 400;
-  margin-bottom: 0;
-}
-
-.sound-section .text {
-  display: inline-block;
-  color: var(--color-transparent);
-  background-image: linear-gradient(90deg,
-      var(--color-sound-gradient-start) 0%,
-      var(--color-sound-gradient-mid) 40%,
-      var(--color-sound-gradient-light) 55%,
-      var(--color-sound-gradient-end) 60%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  padding-top: 0.5px;
-  margin-top: 16px;
-  font-size: 48px;
-  font-weight: 600;
-  margin-bottom: 18px;
-}
-
-.sound-section .description {
-  font-size: 21px;
-  font-weight: 400;
-}
-
-.sound-section .links {
-  display: flex;
-  justify-content: center;
-  margin-top: 24px;
-  align-items: center;
-  margin-left: 0;
-  margin-right: 0;
-  padding-left: 0;
-  list-style: none;
-}
-
-.sound-section .button {
-  background: var(--color-blue-primary);
-  color: var(--color-white);
-  cursor: pointer;
-  display: inline-block;
-  text-align: center;
-  white-space: nowrap;
-  font-size: 17px;
-  font-weight: 400;
-  min-width: 28px;
-  padding: 8px 16px;
-  border-radius: 980px;
-  margin: 0 14px;
-  border: none;
-}
-
-.sound-section .link {
-  text-decoration: none;
-  color: var(--color-blue-link);
-  font-size: 21px;
-  font-weight: 400;
-  margin: 0 14px;
-  cursor: pointer;
-}
-
 @media screen and (max-width: 990px) {
 
-  .sound-section.wrapper,
   .display-section.wrapper {
     padding-left: 20px;
     padding-right: 20px;
     box-sizing: border-box;
   }
 
-  .sound-section .description,
   .display-section .description {
     font-size: 14px;
   }
 
-  .sound-section .content,
   .display-section.wrapper {
     padding-top: 20px;
   }
@@ -297,13 +207,5 @@ body::-webkit-scrollbar-thumb {
   #webgi-canvas-container {
     min-height: 746px;
     height: 100vh;
-  }
-
-  .sound-section.wrapper {
-    height: 100vh;
-  }
-
-  .sound-section .content {
-    max-width: 100%;
   }
 }

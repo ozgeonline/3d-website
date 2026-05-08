@@ -6,7 +6,7 @@ const HeroSection = () => {
   const handleLearnMore = () => {
     const element = document.querySelector(".sound-section")
     window.scrollTo({
-      top: element?.getBoundingClientRect().top, //elementin top mesafesi hesaplama
+      top: element?.getBoundingClientRect().top,
       left: 0,
       behavior: "smooth"
     })

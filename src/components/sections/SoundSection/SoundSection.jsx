@@ -1,4 +1,4 @@
-import React from 'react'
+import styles from './sound-section.module.css'
 
 const SoundSection = () => {
 
@@ -12,27 +12,21 @@ const SoundSection = () => {
   }
 
   return (
-    <div className='sound-section wrapper'>
-      <div className='body'>
-        <div className='sound-section-content content'>
-          <h2 className='title'>New Sound System</h2>
-          <p className='text'>Feel the base.</p>
-          <span className='description'>
-          From $41.62/mo. for 24mo. or $999 before trade-in
+    <section className={styles.soundSection}>
+      <div className={styles.body}>
+        <div className={styles.content}>
+          <h2 className={styles.title}>New Sound System</h2>
+          <p className={styles.headline}>Feel the bass.</p>
+          <span className={styles.description}>
+            From $49.95/mo. for 24mo. or $1199 before trade-in
           </span>
-          <ul className='links'>
-            <li>
-              <button className='button'>Buy</button>
-            </li>
-            <li>
-              <a className='link' onClick={handleLearnMore}>Learn more</a>
-            </li>
-          </ul>
+          <div className={styles.actions}>
+            <button className={styles.button}>Buy</button>
+            <button className={styles.linkButton} onClick={handleLearnMore} type='button'>Learn more</button>
+          </div>
         </div>
-
       </div>
-      
-    </div>
+    </section>
   )
 }
 
