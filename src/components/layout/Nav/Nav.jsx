@@ -1,35 +1,63 @@
-import React from 'react'
-import Logo from '@/assets/images/logo.svg'
-import Search from '@/assets/images/search.svg'
-import Store from '@/assets/images/store.svg'
+import { useState } from 'react'
+import { NAV_ACTIONS, NAV_BRAND, NAV_LINKS } from './nav.data'
+import styles from './nav.module.css'
 
 const Nav = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  const handleMenuToggle = () => {
+    setIsMenuOpen((currentMenuState) => !currentMenuState)
+  }
+
+  const handleMenuClose = () => {
+    setIsMenuOpen(false)
+  }
+
   return (
-    <nav className='nav-wrapper'>
-      <div className='nav-content'>
-        <ul className='list-styled'>
-          <li>
-            <img src={Logo} alt='Logo'/>
-          </li>
-          <li><a className='link-styled'>Store</a></li>
-          <li><a className='link-styled'>Mac</a></li>
-          <li><a className='link-styled'>iPad</a></li>
-          <li><a className='link-styled'>iPhone</a></li>
-          <li><a className='link-styled'>Watch</a></li>
-          <li><a className='link-styled'>AirPods</a></li>
-          <li><a className='link-styled'>Tv & Home</a></li>
-          <li><a className='link-styled'>Entertainment</a></li>
-          <li><a className='link-styled'>Accessories</a></li>
-          <li><a className='link-styled'>Support</a></li>
-          <li>
-            <img src={Search} alt='Search'/>
-          </li>
-          <li>
-            <img src={Store} alt='Store'/>
-          </li>
+    <nav className={styles.navWrapper}>
+      <div className={styles.navContent}>
+        <a className={styles.brandLink} href='#top' aria-label={NAV_BRAND.label}>
+          <img className={styles.brandIcon} src={NAV_BRAND.icon} alt=''/>
+        </a>
+
+        <ul className={styles.desktopLinks}>
+          {NAV_LINKS.map(({ label, href }) => (
+            <li key={label}>
+              <a className={styles.linkStyled} href={href}>
+                {label}
+              </a>
+            </li>
+          ))}
         </ul>
+
+        <div className={styles.navActions}>
+          {NAV_ACTIONS.map(({ label, icon }) => (
+            <a className={styles.actionLink} href={`#${label.toLowerCase()}`} key={label} aria-label={label}>
+              <img className={styles.actionIcon} src={icon} alt=''/>
+            </a>
+          ))}
+          <button
+            aria-expanded={isMenuOpen}
+            aria-label='Open navigation menu'
+            className={styles.menuButton}
+            onClick={handleMenuToggle}
+            type='button'
+          >
+            <span />
+            <span />
+          </button>
+        </div>
       </div>
-      
+
+      {isMenuOpen && (
+        <div className={styles.mobileMenu}>
+          {NAV_LINKS.map(({ label, href }) => (
+            <a className={styles.mobileMenuLink} href={href} key={label} onClick={handleMenuClose}>
+              {label}
+            </a>
+          ))}
+        </div>
+      )}
     </nav>
   )
 }

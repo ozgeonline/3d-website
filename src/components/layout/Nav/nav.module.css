@@ -1,0 +1,155 @@
+.navWrapper {
+  margin: 0;
+  width: 100%;
+  min-width: 320px;
+  min-height: 44px;
+  font-size: 17px;
+  background-color: var(--color-gray-150);
+  position: relative;
+  z-index: 3;
+}
+
+.navContent {
+  margin: 0 auto;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1024px;
+  min-height: 44px;
+  padding: 0 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.brandLink,
+.actionLink,
+.menuButton {
+  width: 32px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brandIcon {
+  width: 17px;
+}
+
+.desktopLinks {
+  cursor: default;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+}
+
+.linkStyled {
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  color: var(--color-black-alpha-80);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.navActions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.actionIcon {
+  width: 18px;
+}
+
+.menuButton {
+  display: none;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.menuButton span {
+  width: 18px;
+  height: 1px;
+  display: block;
+  background-color: var(--color-black-alpha-80);
+  transition: transform 0.2s ease;
+}
+
+.menuButton span + span {
+  margin-top: 7px;
+}
+
+.menuButton[aria-expanded="true"] span:first-child {
+  transform: translateY(4px) rotate(45deg);
+}
+
+.menuButton[aria-expanded="true"] span:last-child {
+  transform: translateY(-4px) rotate(-45deg);
+}
+
+.mobileMenu {
+  display: none;
+}
+
+@media screen and (max-width: 990px) {
+  .navContent {
+    max-width: none;
+    min-height: 56px;
+    padding: 0 14px 0 18px;
+  }
+
+  .brandLink,
+  .actionLink,
+  .menuButton {
+    height: 56px;
+  }
+
+  .brandIcon {
+    width: 19px;
+  }
+
+  .desktopLinks {
+    display: none;
+  }
+
+  .navActions {
+    gap: 18px;
+  }
+
+  .actionIcon {
+    width: 21px;
+  }
+
+  .menuButton {
+    display: inline-flex;
+    flex-direction: column;
+  }
+
+  .mobileMenu {
+    position: absolute;
+    top: 56px;
+    left: 0;
+    right: 0;
+    display: grid;
+    padding: 8px 24px 18px;
+    background-color: var(--color-gray-150);
+  }
+
+  .mobileMenuLink {
+    padding: 14px 0;
+    color: var(--color-black-alpha-80);
+    font-size: 18px;
+    text-decoration: none;
+  }
+}

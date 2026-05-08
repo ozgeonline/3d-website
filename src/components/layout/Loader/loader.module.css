@@ -1,7 +1,7 @@
 .loader {
   position: fixed;
   z-index: 2;
-  background-color: white;
+  background-color: var(--color-white);
   top: 0;
   left: 0;
   width: 100%;
