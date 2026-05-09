@@ -1,17 +1,16 @@
 import {
-  forwardRef, //ana bilesenden bir alt bilesene bir basvuruyu iletir
-  useCallback, //bagimliliklari degistiginde yeniden olusturulur
-  useImperativeHandle, //ana bilesenin alt bilesenin ornegine zorunlu olarak erismesinin ve onu kontrol etmesinin bir yolu
+  forwardRef,
+  useCallback,
+  useImperativeHandle,
   useRef,
   useState
 } from 'react'
-//useRef html ogesine referans alir. dom manipulasyonu
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger'; //sayfanin kaydirilmasiyla tetiklenen animasyonlarda kullanilir.
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useWebgiViewer } from './useWebgiViewer';
 
 
-gsap.registerPlugin(ScrollTrigger); //ScrollTrigger eklentisini GSAP'ye kaydeder. Eklentiyi GSAP ile kullanmak icin bu gereklidir.
+gsap.registerPlugin(ScrollTrigger);
 
 const PREVIEW_CAMERA_POSITION = {
   x: 13.04,
@@ -53,14 +52,12 @@ const WebgiViewer = forwardRef(({ onDeviceModeChange, onPreviewModeChange }, ref
   })
 
   const updateCamera = useCallback(() => {
-    viewerRef?.setDirty()
-    //yeniden olusturulmasi gerektigi anlamina geliyor. Bu, sahne veya kamera degistiginde gereklidir;
-    //boylece izleyici, sahnenin ve kameranin yeni durumunu yansitacak sekilde ekrani guncelleyebilir.
-    cameraRef?.positionTargetUpdated(true) //ScrollTrigger tarafindan cagrilir.Animasyon ogesinin konumunun guncellenmesinden sorumludur.
+    viewerRef?.setDirty() // Marks the scene as dirty so the viewer re-renders when the scene or camera changes.
+    cameraRef?.positionTargetUpdated(true) // Called by ScrollTrigger. Responsible for updating the animation element's position.
   }, [cameraRef, viewerRef])
 
   const enablePreviewControls = useCallback(() => {
-    //Canvas da points olaylarini etkinlestirir.
+    // Enables pointer events on the canvas.
     viewerRef.scene.activeCamera.setCameraOptions({ controlsEnabled: true })
   }, [viewerRef])
 
@@ -70,7 +67,7 @@ const WebgiViewer = forwardRef(({ onDeviceModeChange, onPreviewModeChange }, ref
   }, [onPreviewModeChange])
 
   useImperativeHandle(ref, () => ({
-    triggerPreview() { //onizleme animasyonunun tetiklenmesinden sorumludur.
+    triggerPreview() { // Responsible for triggering the preview animation.
       if (!viewerRef || !positionRef || !targetRef || !cameraRef) return
 
       setPreviewModeState(true)
@@ -82,7 +79,7 @@ const WebgiViewer = forwardRef(({ onDeviceModeChange, onPreviewModeChange }, ref
         onUpdate: updateCamera
       })
 
-      gsap.to(targetRef, { ...PREVIEW_CAMERA_TARGET, duration: 2})
+      gsap.to(targetRef, { ...PREVIEW_CAMERA_TARGET, duration: 2 })
     }
   }), [cameraRef, enablePreviewControls, positionRef, setPreviewModeState, targetRef, updateCamera, viewerRef])
 
@@ -105,11 +102,11 @@ const WebgiViewer = forwardRef(({ onDeviceModeChange, onPreviewModeChange }, ref
       ...target,
       scrollTrigger: DISPLAY_SCROLL_TRIGGER
     })
-  },[cameraRef, isMobile, positionRef, setPreviewModeState, targetRef, updateCamera, viewerRef])
+  }, [cameraRef, isMobile, positionRef, setPreviewModeState, targetRef, updateCamera, viewerRef])
 
   return (
     <div id='webgi-canvas-container' className={previewMode ? 'is-preview-mode' : ''}>
-      <canvas id='webgi-canvas' ref={canvasRef}/>
+      <canvas id='webgi-canvas' ref={canvasRef} />
       {
         previewMode && (
           <button className='button' onClick={handleExit}>Exit</button>
