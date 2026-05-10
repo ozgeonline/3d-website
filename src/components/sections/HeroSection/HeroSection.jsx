@@ -1,17 +1,12 @@
 import HoldingIphone from '@/assets/images/iphone-hand.png'
 import SectionActions from '@/components/ui/SectionActions'
+import { scrollToSection } from '@/utils/scrollToSection'
 import styles from './hero-section.module.css'
 
 const HeroSection = () => {
 
   const handleLearnMore = () => {
-    const element = document.querySelector(".sound-section")
-    window.scrollTo({
-      top: element?.getBoundingClientRect().top,
-      left: 0,
-      behavior: "smooth"
-    })
-
+    scrollToSection('.sound-section')
   }
 
   const actions = [

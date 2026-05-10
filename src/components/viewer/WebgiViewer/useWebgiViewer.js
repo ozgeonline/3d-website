@@ -13,7 +13,7 @@ import {
 } from "webgi";
 import { scrollAnimation } from '@/animations/scrollAnimation';
 
-export const useWebgiViewer = ({ canvasRef, onDeviceModeChange }) => {
+export const useWebgiViewer = ({ canvasRef, onDeviceModeChange, onViewerReady }) => {
   const [viewerRef, setViewerRef] = useState(null)
   const [targetRef, setTargetRef] = useState(null)
   const [cameraRef, setCameraRef] = useState(null)
@@ -90,12 +90,13 @@ export const useWebgiViewer = ({ canvasRef, onDeviceModeChange }) => {
       })
 
       memoziedScrollAnimation(position, target, isMobileOrTablet, onUpdate)
+      onViewerReady?.()
 
     } catch (error) {
       console.log(error);
     }
 
-  },[canvasRef, memoziedScrollAnimation, onDeviceModeChange])
+  },[canvasRef, memoziedScrollAnimation, onDeviceModeChange, onViewerReady])
 
   useEffect(() => {
     setupViewer()

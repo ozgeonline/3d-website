@@ -24,13 +24,19 @@
   --color-transparent: transparent;
 }
 
+html,
+body,
+#root {
+  min-height: 100%;
+  background-color: var(--color-black);
+}
+
 body {
   margin: 0;
   font-family: "SF Pro Display", SF Pro Icons, Helvetica Neue, Helvetica, Arial,
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--color-black);
   color: var(--color-white-soft);
 }
 

@@ -1,15 +1,11 @@
 import SectionActions from '@/components/ui/SectionActions'
+import { scrollToSection } from '@/utils/scrollToSection'
 import styles from './sound-section.module.css'
 
 const SoundSection = () => {
 
   const handleLearnMore = () => {
-    const element = document.querySelector('.display-section')
-    window.scrollTo({
-      top: element?.getBoundingClientRect().bottom,
-      left: 0,
-      behavior: 'smooth'
-    })
+    scrollToSection('.display-section')
   }
 
   const actions = [

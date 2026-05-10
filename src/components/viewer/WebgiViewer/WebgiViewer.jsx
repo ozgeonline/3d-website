@@ -34,21 +34,30 @@ const EXIT_CAMERA_TARGET = {
   mobile: { x: -1.62, y: 0.02, z: -0.06 },
 }
 
-const DISPLAY_SCROLL_TRIGGER = {
-  trigger: '.display-section',
-  start: 'top bottom',
-  end: 'top top',
-  scrub: 2,
-  immediateRender: false
+const getPhoneScrollTriggers = () => (
+  ScrollTrigger.getAll().filter(({ vars }) => vars.id?.startsWith('phone-'))
+)
+
+const setPhoneScrollTriggersEnabled = (isEnabled) => {
+  getPhoneScrollTriggers().forEach((trigger) => {
+    if (isEnabled) {
+      trigger.enable(false)
+      return
+    }
+
+    trigger.disable(false)
+  })
 }
 
-const WebgiViewer = forwardRef(({ onDeviceModeChange, onPreviewModeChange }, ref) => {
+const WebgiViewer = forwardRef(({ onDeviceModeChange, onPreviewModeChange, onViewerReady }, ref) => {
 
   const canvasRef = useRef(null)
+  const cameraTweenRef = useRef(null)
   const [previewMode, setPreviewMode] = useState(false)
   const { cameraRef, isMobile, positionRef, targetRef, viewerRef } = useWebgiViewer({
     canvasRef,
     onDeviceModeChange,
+    onViewerReady,
   })
 
   const updateCamera = useCallback(() => {
@@ -61,6 +70,25 @@ const WebgiViewer = forwardRef(({ onDeviceModeChange, onPreviewModeChange }, ref
     viewerRef.scene.activeCamera.setCameraOptions({ controlsEnabled: true })
   }, [viewerRef])
 
+  const disablePreviewControls = useCallback(() => {
+    viewerRef.scene.activeCamera.setCameraOptions({ controlsEnabled: false })
+  }, [viewerRef])
+
+  const animateCamera = useCallback(({ position, target, duration, onComplete }) => {
+    cameraTweenRef.current?.kill()
+
+    cameraTweenRef.current = gsap.timeline({
+      defaults: {
+        duration,
+        ease: 'power2.out',
+      },
+      onUpdate: updateCamera,
+      onComplete,
+    })
+      .to(positionRef, position, 0)
+      .to(targetRef, target, 0)
+  }, [positionRef, targetRef, updateCamera])
+
   const setPreviewModeState = useCallback((nextPreviewMode) => {
     setPreviewMode(nextPreviewMode)
     onPreviewModeChange(nextPreviewMode)
@@ -70,18 +98,18 @@ const WebgiViewer = forwardRef(({ onDeviceModeChange, onPreviewModeChange }, ref
     triggerPreview() { // Responsible for triggering the preview animation.
       if (!viewerRef || !positionRef || !targetRef || !cameraRef) return
 
+      setPhoneScrollTriggersEnabled(false)
       setPreviewModeState(true)
-      enablePreviewControls()
+      disablePreviewControls()
 
-      gsap.to(positionRef, {
-        ...PREVIEW_CAMERA_POSITION,
+      animateCamera({
+        position: PREVIEW_CAMERA_POSITION,
+        target: PREVIEW_CAMERA_TARGET,
         duration: 2,
-        onUpdate: updateCamera
+        onComplete: enablePreviewControls,
       })
-
-      gsap.to(targetRef, { ...PREVIEW_CAMERA_TARGET, duration: 2 })
     }
-  }), [cameraRef, enablePreviewControls, positionRef, setPreviewModeState, targetRef, updateCamera, viewerRef])
+  }), [animateCamera, cameraRef, disablePreviewControls, enablePreviewControls, positionRef, setPreviewModeState, targetRef, viewerRef])
 
   const handleExit = useCallback(() => {
     if (!viewerRef || !positionRef || !targetRef || !cameraRef) return
@@ -89,20 +117,19 @@ const WebgiViewer = forwardRef(({ onDeviceModeChange, onPreviewModeChange }, ref
     const position = isMobile ? EXIT_CAMERA_POSITION.mobile : EXIT_CAMERA_POSITION.desktop
     const target = isMobile ? EXIT_CAMERA_TARGET.mobile : EXIT_CAMERA_TARGET.desktop
 
-    viewerRef.scene.activeCamera.setCameraOptions({ controlsEnabled: false })
+    disablePreviewControls()
     setPreviewModeState(false)
 
-    gsap.to(positionRef, {
-      ...position,
-      scrollTrigger: DISPLAY_SCROLL_TRIGGER,
-      onUpdate: updateCamera
-    });
-
-    gsap.to(targetRef, {
-      ...target,
-      scrollTrigger: DISPLAY_SCROLL_TRIGGER
+    animateCamera({
+      position,
+      target,
+      duration: 1,
+      onComplete: () => {
+        setPhoneScrollTriggersEnabled(true)
+        ScrollTrigger.refresh()
+      },
     })
-  }, [cameraRef, isMobile, positionRef, setPreviewModeState, targetRef, updateCamera, viewerRef])
+  }, [animateCamera, cameraRef, disablePreviewControls, isMobile, positionRef, setPreviewModeState, targetRef, viewerRef])
 
   return (
     <div id='webgi-canvas-container' className={previewMode ? 'is-preview-mode' : ''}>

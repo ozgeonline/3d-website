@@ -7,7 +7,7 @@ const DisplaySection = ({ triggerPreview }) => {
   ]
 
   return (
-    <section className={styles.displaySection}>
+    <section className={`${styles.displaySection} display-section`}>
       <h2 className={styles.title}>New</h2>
       <p className={styles.headline}>Brilliant.</p>
       <span className={styles.description}>A display that's up to 2x brighter in the sun.</span>
